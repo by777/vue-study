@@ -1,0 +1,50 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-08 21:56:52
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-08 22:05:19
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- 对象就是无序键值对的集合 -->
+        <h1 :style="styleObj1">只是一个H1..............</h1>
+        <h1 :style="[styleObj1,styleObj2]">只是一个H1......也可以绑定一个数组........</h1>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "................",
+                flag: true, //flag为true时添加属性
+                styleObj1: {
+                    color: 'red',
+                    'font-weight': '200'
+                },
+                styleObj2: {
+                    'font-style': 'italic'
+                },
+
+            },
+            methods: {
+
+            },
+
+        });
+    </script>
+
+
+</body>
+
+</html>

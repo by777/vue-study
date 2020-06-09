@@ -1,0 +1,69 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-07 16:31:52
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-07 23:45:01
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+        <p v-cloak>+++++++++{{ msg }} 插值表达式可以拼接------------</p>
+
+        <h4 v-text="msg">v-text默认没有闪烁问题的，但是text文本会被覆盖，这行文本会被msg覆盖</h4>
+        <p>{{ msg2 }} ++++ 特殊字符会被自动转义</p>
+        <div v-text="msg2"></div>
+        <div v-html="msg3">这里的内容会被覆盖</div>
+        <input type="button" value="按钮" v-bind:title="mytitle + '。。竟然可以拼接'" id="btn">
+
+        <input type="button" value="alert" v-bind:title="mytitle" id="btn2" v-on:click="show">
+        <input type="button" value="mouseover" v-bind:title="mytitle" id="btn3" v-on:mouseover="show">
+    </div>
+    <div>简写：v-bind: ====== 中可以写合法的js表达式<br>
+        v-bind: 简写:
+        v-on：简写@
+    </div>
+
+    </div>
+
+    <script src="./lib/vue.js"></script>
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "v-cloak...可以解决插值表达式闪烁的问题",
+                msg2: "<h1>这里是H1,插值表达式和v-text都会自动转义</h1>",
+                msg3: "<h2>这里是H2,v-html不会自动转义,，不能拼接字符串</h2>",
+                mytitle: "这是一个自己定义的title属性,可以被v-bind绑定"
+            },
+
+            methods: { //这个method属性中定义了当前Vue实例所有可用方法
+                show: function () {
+                    alert('Hello!!!!')
+                }
+
+            }
+
+        })
+
+        document.getElementById("btn").onclick = function () {
+            alert("Hello Vue!")
+        }
+    </script>
+
+</body>
+
+</html>

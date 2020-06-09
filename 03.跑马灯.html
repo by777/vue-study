@@ -1,0 +1,63 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-07 23:46:10
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-08 14:10:55
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+</head>
+<body>
+    <div id = "app">
+        <h4>{{msg}}</h4>
+        <input type="button" value="跑起来" @click="run">
+        <input type="button" value="停下"  @click="stop">
+
+
+        
+    </div>
+    
+
+    <script>
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"一匹快乐的小马。。。。。。。",
+                intervalId:null,//写在这里为了作用域方便访问
+            },
+            methods:{
+                run() {
+                         //var _t his = this;
+                         if(this.intervalId != null){
+                             return;//为了防止多次重复开启定时器
+                         }
+                         // 只有intervalId == null时才开启定时器
+                        this.intervalId = setInterval( () => {
+                        // () =>内部的this指向外部的this
+                        var start = this.msg.substring(0,1);
+                        var end = this.msg.substring(1);//从1开始截到尾部
+                        this.msg = end + start
+                        
+                    }, 400)
+                    // = run(){...}
+                    //console.log(this.msg);
+                    
+                    // 注意：VM实例会监听对象属性的变化，并自动同步
+                },
+
+                stop(){
+                    clearInterval(this.intervalId);
+                    this.intervalId = null;//重新赋值，确保下次可以开启                    
+                },
+
+            }
+        })
+
+    </script>
+</body>
+</html>

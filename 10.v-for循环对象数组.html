@@ -1,0 +1,55 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-08 22:19:28
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-08 22:23:40
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+        <p v-for="(user,i) in list">{{user.id}} ======> {{user.name}}  -----index: {{i}}
+
+        </p>
+
+
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                list: [{
+                    'id': 1,
+                    'name': '张1'
+                }, {
+                    'id': 2,
+                    'name': '张2'
+                }, {
+                    'id': 3,
+                    'name': '张3'
+                }, {
+                    'id': 4,
+                    'name': '张4'
+                }],
+            },
+            methods: {
+
+            },
+        });
+    </script>
+
+
+</body>
+
+</html>
