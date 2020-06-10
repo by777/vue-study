@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-09 21:45:26
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-10 13:06:49
+ * @LastEditTime: 2020-06-10 13:40:21
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -76,75 +76,88 @@
         //注意我们new出来的这个vm对象，就是MVVM中的VM调度者
 
         var vm = new Vue({
-            el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
-            data: { //MVVM中的M
-                //data中存放el中要用到的数据
-                Id: "",
-                Name: "",
-                keywords:"",
-                list: [{
-                    Id: 1,
-                    Name: "宝马",
-                    Ctime: new Date()
-                }, {
-                    Id: 2,
-                    Name: "奔驰",
-                    Ctime: new Date()
-                }, {
-                    Id: 3,
-                    Name: "奥迪",
-                    Ctime: new Date()
-                }],
-            },
-            methods: {
-                add() {
-                    this.list.push({
-                        Id: this.Id,
-                        Name: this.Name,
-                        Ctime: new Date()
-                    });
-                    // 表达式计算从右到左计算
-                    this.Id = eval(parseInt(this.Id) + 1);
-                    this.Name = '';
-                },
-                del(id) {
-                    //console.log(id);
-                    // this.list.some((item, i) => {
-                    //     // i是索引
-                    //     if (item.Id == id) {
-                    //         // console.log(this.list);
-                    //         // 在数组的some方法中，如果return true就会立即终止搜索
-                    //         // 从索引为i的位置开始删除1个、插入的元素位于 index 的第一1 的元素，并添加一个新元素来替代被删除的元素：
-                    //         this.list.splice(i, 1);
-                           
-                    //         return true;
-                    //     }
-                    // })
 
-                    // 方法二
-                    var index = this.list.findIndex(item => {
-                        if(item.id == id){
-                            return true;
-                        }
-                        
-                    })
+                    el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
 
-                    this.list.splice(index,1);
+                    data: { //MVVM中的M
+                        //data中存放el中要用到的数据
+                        Id: "",
+                        Name: "",
+                        keywords: "",
+                        list: [{
+                            Id: 1,
+                            Name: "宝马",
+                            Ctime: new Date()
+                        }, {
+                            Id: 2,
+                            Name: "奔驰",
+                            Ctime: new Date()
+                        }, {
+                            Id: 3,
+                            Name: "奥迪",
+                            Ctime: new Date()
+                        }],
+                    },
 
-                },
-                search(keywords){
-                    // 现在item从搜索中获得
-                    var newList = [];
-                    this.list.forEach(item => {
-                        if(item.Name.indexOf(keywords) != -1){
-                            // 说明包含在keywords
-                            newList.push(item);
-                        }
-                    })
-                    return newList;
-                }
-            }
-        })
+                    methods: {
+
+                        add() {
+                            this.list.push({
+                                Id: this.Id,
+                                Name: this.Name,
+                                Ctime: new Date()
+                            });
+                            // 表达式计算从右到左计算
+                            this.Id = eval(parseInt(this.Id) + 1);
+                            this.Name = '';
+                        },
+
+                        del(id) {
+                            //console.log(id);
+                            // this.list.some((item, i) => {
+                            //     // i是索引
+                            //     if (item.Id == id) {
+                            //         // console.log(this.list);
+                            //         // 在数组的some方法中，如果return true就会立即终止搜索
+                            //         // 从索引为i的位置开始删除1个、插入的元素位于 index 的第一1 的元素，并添加一个新元素来替代被删除的元素：
+                            //         this.list.splice(i, 1);
+
+                            //         return true;
+                            //     }
+                            // })
+                            // 方法二
+                            var index = this.list.findIndex(item => {
+                                if (item.id == id) {
+                                    return true;
+                                }
+
+                            })
+                            this.list.splice(index, 1);
+
+                        },
+
+                        search(keywords) {
+                            //     // 现在item从搜索中获得
+                            //     var newList = [];
+                            //     this.list.forEach(item => {
+                            //         if(item.Name.indexOf(keywords) != -1){
+                            //             // 说明包含在keywords
+                            //             newList.push(item);
+                            //         }
+                            //     })
+                            //     return newList;
+                            // }
+                            // 方法二
+                            return this.list.filter(item => {
+                                if (item.Name.includes(keywords)) {
+                                    return item;
+                                }
+
+                            });
+
+                        },
+                    },
+            });
     </script>
 
 </body>
