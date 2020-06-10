@@ -1,0 +1,152 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-09 21:45:26
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-10 13:06:49
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+    <!-- 推荐不适用Jquery -->
+
+</head>
+
+<body>
+
+    <div id="app">
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body">
+                <div class="panel-body form-inline"></div>
+                <label>
+                    Id:
+                    <input type="text" class="form-control" v-model="Id">
+                </label>
+                <label>
+                    Name:
+                    <input type="text" class="form-control" v-model="Name">
+                </label>
+                <!-- 在Vue中使用事件绑定机制可加括号add()可不加，加了可以传参 -->
+                <input type="button" value="添加" class="btn btn-primary" @click="add">
+                <label>
+                    搜索：
+                    <input type="text" class="form-control" v-model="keywords">
+                </label>
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th> Id </th>
+                    <th> Name </th>
+                    <th> Ctime </th>
+                    <th> Operation </th>
+
+                </tr>
+
+
+            </thead>
+            <tbody>
+                <tr v-for="item in search(keywords)" :key="item.id">
+                    <td>{{item.Id}}</td>
+                    <td>{{item.Name}}</td>
+                    <td>{{item.Ctime}}</td>
+                    <td><a href="" @click.prevent="del(item.Id)">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+    </div>
+
+    <script>
+        //注意我们new出来的这个vm对象，就是MVVM中的VM调度者
+
+        var vm = new Vue({
+            el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
+            data: { //MVVM中的M
+                //data中存放el中要用到的数据
+                Id: "",
+                Name: "",
+                keywords:"",
+                list: [{
+                    Id: 1,
+                    Name: "宝马",
+                    Ctime: new Date()
+                }, {
+                    Id: 2,
+                    Name: "奔驰",
+                    Ctime: new Date()
+                }, {
+                    Id: 3,
+                    Name: "奥迪",
+                    Ctime: new Date()
+                }],
+            },
+            methods: {
+                add() {
+                    this.list.push({
+                        Id: this.Id,
+                        Name: this.Name,
+                        Ctime: new Date()
+                    });
+                    // 表达式计算从右到左计算
+                    this.Id = eval(parseInt(this.Id) + 1);
+                    this.Name = '';
+                },
+                del(id) {
+                    //console.log(id);
+                    // this.list.some((item, i) => {
+                    //     // i是索引
+                    //     if (item.Id == id) {
+                    //         // console.log(this.list);
+                    //         // 在数组的some方法中，如果return true就会立即终止搜索
+                    //         // 从索引为i的位置开始删除1个、插入的元素位于 index 的第一1 的元素，并添加一个新元素来替代被删除的元素：
+                    //         this.list.splice(i, 1);
+                           
+                    //         return true;
+                    //     }
+                    // })
+
+                    // 方法二
+                    var index = this.list.findIndex(item => {
+                        if(item.id == id){
+                            return true;
+                        }
+                        
+                    })
+
+                    this.list.splice(index,1);
+
+                },
+                search(keywords){
+                    // 现在item从搜索中获得
+                    var newList = [];
+                    this.list.forEach(item => {
+                        if(item.Name.indexOf(keywords) != -1){
+                            // 说明包含在keywords
+                            newList.push(item);
+                        }
+                    })
+                    return newList;
+                }
+            }
+        })
+    </script>
+
+</body>
+
+</html>
