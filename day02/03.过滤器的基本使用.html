@@ -1,0 +1,61 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-10 22:27:01
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-10 22:45:49
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+        <!-- 过滤器  -->
+        {{msg | msgFormat('.mp3','.jpg')}}
+
+
+
+
+    </div>
+
+    <script>
+        //注意我们new出来的这个vm对象，就是MVVM中的VM调度者
+
+        // 这是全局过滤器
+        Vue.filter('msgFormat', function (msg, arg,arg2) {
+            //msg.replace('文本','语言'); 只替换第一个
+            return msg.replace(/文本/g, '语言') + arg+arg2; //第一个参数也可以是正则，g是全局匹配
+        });
+
+        var vm = new Vue({
+
+            el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
+
+            data: { //MVVM中的M
+                //data中存放el中要用到的数据
+                msg: "这是一段文本，文本没有意义，文本只用来实验过滤器,过滤器也可以嵌套使用",
+
+            },
+
+            methods: {
+
+
+
+
+            },
+        });
+        //Vue.filter('过滤器的名称',function(){})
+    </script>
+
+</body>
+
+</html>
