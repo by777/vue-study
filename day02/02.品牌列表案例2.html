@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-10 22:27:01
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-16 22:27:16
+ * @LastEditTime: 2020-06-16 22:51:33
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -32,16 +32,16 @@
                 </label>
                 <label>
                     Name:
-                    <input type="text" class="form-control" v-model="Name" @keyup.enter="add">
+                    <input type="text" class="form-control" v-model="Name" @keyup.enter="add" v-color>
                     <!-- enter抬起 -->
                 </label>
                 <!-- 在Vue中使用事件绑定机制可加括号add()可不加，加了可以传参 -->
                 <input type=" button" value="添加" class="btn btn-primary" @click="add">
-                    <label>
-                        搜索：
-                        <!-- vue中所有的指令都以v-开头 -->
-                        <input type="text" class="form-control" v-model="keywords" id="search" v-focus>
-                    </label>
+                <label>
+                    搜索：
+                    <!-- vue中所有的指令都以v-开头 -->
+                    <input type="text" class="form-control" v-model="keywords" id="search" v-focus v-color="'blue'">
+                </label>
             </div>
         </div>
 
@@ -111,6 +111,20 @@
                 el.focus();
             },
             updated: function () {},
+        });
+
+        Vue.directive("color", {
+            bind: function (el,binding) {
+                el.style.color = 'red';
+                console.log(binding.name);
+                // value计算 expression原样输出
+                console.log(binding.expression);
+                console.log(binding.value);
+                el.style.color=binding.value;
+
+
+            }
+
         });
 
         // 自定义全局按键修饰符
@@ -203,7 +217,14 @@
                 // dateFormat: function (dataStr, pattern) {
                 //     return dataStr + '=====';
                 // }
-            }
+            },
+            directives:{
+                'what':{
+                    bind:function(){
+                        
+                    }
+                }
+            },
         });
         //Vue.filter('过滤器的名称',function(){})
         Vue.filter('dataFilter', function (data) {
@@ -212,7 +233,6 @@
 
         // document.getElementById("search").focus();原生
         // 自定义全局指令，不需要加v-，调用的时候要加v-
-
     </script>
 
 </body>

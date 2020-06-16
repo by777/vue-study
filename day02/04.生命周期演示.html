@@ -1,0 +1,55 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-16 23:04:19
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-16 23:18:02
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                msg: "okk",
+            },
+            method: {
+                show() {
+                    console.log("执行了show方法");
+                }
+            },
+            beforeCreate() {
+                //实例完全被创建出来之前执行它
+                console.log(this.msg); //会提示未定义，not a function，因为msg、show此时还没有初始化
+            },
+            created() {
+                console.log(this.msg); //此时初始化变量和方法了，已经可以正常调用了
+            },
+            beforeMount() {
+                //vue开始编译模板，执行指令，编译成最终的字符串模板，把这个字符串模板渲染成内存中的DOM，此时只是在内存中渲染，
+                // 并没有挂在vue中
+            },
+            mounted() {
+                // 内存中编译好的模板正式的替换到浏览器中去
+            },
+
+        });
+    </script>
+</body>
+
+</html>
