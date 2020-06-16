@@ -2,10 +2,11 @@
  * @Author: Xu Bai
  * @Date: 2020-06-10 22:27:01
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-10 23:05:23
---> 
+ * @LastEditTime: 2020-06-16 22:27:16
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,11 +14,12 @@
     <script src="../lib/vue.js"></script>
     <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
 </head>
+
 <body>
 
     <div id="app">
 
-<!-- 过滤器  -->
+        <!-- 过滤器  -->
         <div class="panel panel-primary">
             <div class="panel-heading">
                 <h3 class="panel-title">添加品牌</h3>
@@ -30,14 +32,16 @@
                 </label>
                 <label>
                     Name:
-                    <input type="text" class="form-control" v-model="Name">
+                    <input type="text" class="form-control" v-model="Name" @keyup.enter="add">
+                    <!-- enter抬起 -->
                 </label>
                 <!-- 在Vue中使用事件绑定机制可加括号add()可不加，加了可以传参 -->
-                <input type="button" value="添加" class="btn btn-primary" @click="add">
-                <label>
-                    搜索：
-                    <input type="text" class="form-control" v-model="keywords">
-                </label>
+                <input type=" button" value="添加" class="btn btn-primary" @click="add">
+                    <label>
+                        搜索：
+                        <!-- vue中所有的指令都以v-开头 -->
+                        <input type="text" class="form-control" v-model="keywords" id="search" v-focus>
+                    </label>
             </div>
         </div>
 
@@ -70,114 +74,147 @@
 
     <script>
         //注意我们new出来的这个vm对象，就是MVVM中的VM调度者
-        Vue.filter('dateFormat',function(dateStr,pattern){
-            var dt = new Date(dateStr);//根据给定的字符串得到特定事件
+        Vue.filter('dateFormat', function (dateStr, pattern) {
+            var dt = new Date(dateStr); //根据给定的字符串得到特定事件
             var y = dt.getFullYear();
-            var m = dt.getMonth() + 1;// 从0开始
+            var m = (dt.getMonth() + 1).toString().padStart(2, '0'); // 从0开始,1位填充成两位
             var d = dt.getDate();
             //return y + '-' + m + '-' + d 丑陋
             //
 
-            if(pattern && pattern.toLowerCase()== 'yyyy-mmmm-dd'){
-                return `${y}-${m}-${d}`;//使用模板字符串
-            }
-            else{
-                var hh=dt.getHours();
-                var mm=dt.getMinutes();
+            if (pattern && pattern.toLowerCase() == 'yyyy-mmmm-dd') {
+                return `${y}-${m}-${d}`; //使用模板字符串
+            } else {
+                var hh = dt.getHours();
+                var mm = dt.getMinutes();
                 var ss = dt.getSeconds();
-                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`;//使用模板字符串
+                return `${y}-${m}-${d} ${hh}:${mm}:${ss}`; //使用模板字符串
             }
 
         });
 
+        Vue.directive("focus", {
+            /* 指令定义函数提供了几个钩子函数：
+            bind:只调用一次,每当指令绑定到元素上的时候
+            inserted：元素插入到DOM中时，会执行。只执行一次
+            update；Vnode更新的时候，可能会触发多次
+            componentUpdated
+            unbind
+            inserted:
+            */
+            // bind: function (el) {
+            //     // 第一个参数永远el，表示一个被指令的元素，是一个原生的DOM对象
+            //     el.focus();
+            //     // 在元素刚绑定了元素的时候还没有插入到DOM中去，没有作用
+            // },
+            inserted: function (el) {
+                el.focus();
+            },
+            updated: function () {},
+        });
+
+        // 自定义全局按键修饰符
+        //Vue.config.keyCode.f2 = 113;
+
         var vm = new Vue({
 
-                    el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
+            el: "#app", //表示我们new的这个vue实例，要控制页面上的哪个区域
 
-                    data: { //MVVM中的M
-                        //data中存放el中要用到的数据
-                        Id: "",
-                        Name: "",
-                        keywords: "",
-                        list: [{
-                            Id: 1,
-                            Name: "宝马",
-                            Ctime: new Date()
-                        }, {
-                            Id: 2,
-                            Name: "奔驰",
-                            Ctime: new Date()
-                        }, {
-                            Id: 3,
-                            Name: "奥迪",
-                            Ctime: new Date()
-                        }],
-                    },
+            data: { //MVVM中的M
+                //data中存放el中要用到的数据
+                Id: "",
+                Name: "",
+                keywords: "",
+                list: [{
+                    Id: 1,
+                    Name: "宝马",
+                    Ctime: new Date()
+                }, {
+                    Id: 2,
+                    Name: "奔驰",
+                    Ctime: new Date()
+                }, {
+                    Id: 3,
+                    Name: "奥迪",
+                    Ctime: new Date()
+                }],
+            },
 
-                    methods: {
+            methods: {
 
-                        add() {
-                            this.list.push({
-                                Id: this.Id,
-                                Name: this.Name,
-                                Ctime: new Date()
-                            });
-                            // 表达式计算从右到左计算
-                            this.Id = eval(parseInt(this.Id) + 1);
-                            this.Name = '';
-                        },
+                add() {
+                    this.list.push({
+                        Id: this.Id,
+                        Name: this.Name,
+                        Ctime: new Date()
+                    });
+                    // 表达式计算从右到左计算
+                    this.Id = eval(parseInt(this.Id) + 1);
+                    this.Name = '';
+                },
 
-                        del(id) {
-                            //console.log(id);
-                            // this.list.some((item, i) => {
-                            //     // i是索引
-                            //     if (item.Id == id) {
-                            //         // console.log(this.list);
-                            //         // 在数组的some方法中，如果return true就会立即终止搜索
-                            //         // 从索引为i的位置开始删除1个、插入的元素位于 index 的第一1 的元素，并添加一个新元素来替代被删除的元素：
-                            //         this.list.splice(i, 1);
+                del(id) {
+                    //console.log(id);
+                    // this.list.some((item, i) => {
+                    //     // i是索引
+                    //     if (item.Id == id) {
+                    //         // console.log(this.list);
+                    //         // 在数组的some方法中，如果return true就会立即终止搜索
+                    //         // 从索引为i的位置开始删除1个、插入的元素位于 index 的第一1 的元素，并添加一个新元素来替代被删除的元素：
+                    //         this.list.splice(i, 1);
 
-                            //         return true;
-                            //     }
-                            // })
-                            // 方法二
-                            var index = this.list.findIndex(item => {
-                                if (item.id == id) {
-                                    return true;
-                                }
+                    //         return true;
+                    //     }
+                    // })
+                    // 方法二
+                    var index = this.list.findIndex(item => {
+                        if (item.id == id) {
+                            return true;
+                        }
 
-                            })
-                            this.list.splice(index, 1);
+                    })
+                    this.list.splice(index, 1);
 
-                        },
+                },
 
-                        search(keywords) {
-                            //     // 现在item从搜索中获得
-                            //     var newList = [];
-                            //     this.list.forEach(item => {
-                            //         if(item.Name.indexOf(keywords) != -1){
-                            //             // 说明包含在keywords
-                            //             newList.push(item);
-                            //         }
-                            //     })
-                            //     return newList;
-                            // }
-                            // 方法二
-                            return this.list.filter(item => {
-                                if (item.Name.includes(keywords)) {
-                                    return item;
-                                }
+                search(keywords) {
+                    //     // 现在item从搜索中获得
+                    //     var newList = [];
+                    //     this.list.forEach(item => {
+                    //         if(item.Name.indexOf(keywords) != -1){
+                    //             // 说明包含在keywords
+                    //             newList.push(item);
+                    //         }
+                    //     })
+                    //     return newList;
+                    // }
+                    // 方法二
+                    return this.list.filter(item => {
+                        if (item.Name.includes(keywords)) {
+                            return item;
+                        }
 
-                            });
+                    });
 
-                        },
-                    },
-            });
-            //Vue.filter('过滤器的名称',function(){})
-            Vue.filter('dataFilter',function(data){
-                return data+'123';
-            })
+                },
+            },
+            filters: {
+                //私有过滤器,app内才可以使用，当私有全局都存在，采用就近原则，优先调用私有
+                // dateFormat: function (dataStr, pattern) {
+                //     return dataStr + '=====';
+                // }
+            }
+        });
+        //Vue.filter('过滤器的名称',function(){})
+        Vue.filter('dataFilter', function (data) {
+            return data + '123';
+        })
+
+        // document.getElementById("search").focus();原生
+        // 自定义全局指令，不需要加v-，调用的时候要加v-
+
     </script>
-    
+
 </body>
+
 </html>
