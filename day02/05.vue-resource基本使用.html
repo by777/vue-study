@@ -1,0 +1,63 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-17 16:11:06
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-17 21:20:08
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <!-- 挂载一个this.$http -->
+    <script src="../lib/vue-resource-1.3.4.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="GET请求" @click="getInfo">
+        <input type="button" value="POST请求" @click="postInfo">
+        <input type="button" value="jsonp请求" @click="jsonpInfo">
+        Jsonp用来解决跨域访问，但只能支持get
+
+    </div>
+
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                getInfo() {
+                    this.$http.get('https://cn.vuejs.org/').then(function (result) {
+                        console.log(result);
+                    }); //.then拿到返回的数据
+                },
+                postInfo() {
+                    // 手动发起的post默认没有表单格式application/x-wwww-form-urlencoded 选项emulateJSON
+                    this.$http.post('https://cn.vuejs.org/', {}, {
+                        emulateJSON: true
+                    }).then(result => {
+                        console.log(result.headers);
+                    })
+                },
+                jsonpInfo() {
+                    this.$http.jsonp('https://cn.vuejs.org/').then(result => {
+                        console.log(result.body);
+                    })
+
+                }
+            },
+            filters: {
+
+            }
+        });
+    </script>
+</body>
+
+</html>

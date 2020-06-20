@@ -1,0 +1,143 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-20 13:36:35
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-20 15:59:51
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <script src="../lib/vue-resource-1.3.4.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css">
+</head>
+
+<body>
+
+    <div id="app">
+
+
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">添加品牌</h3>
+            </div>
+            <div class="panel-body form-inline">
+                <label>Id:
+                    <input type="text" disabled>
+                </label>
+                <label>Name:
+                    <input type="text" v-model="name">
+                </label>
+                <input type="button" value="添加" @click="add" class="btn btn-primary">
+
+
+            </div>
+        </div>
+
+
+        <table class="table table-bordered table-hover table-striped">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Ctime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="item in list" :key="item.id">
+                    <td>{{item.id}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.ctime}}</td>
+                    <td><a href="">删除</a></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- http://api.cms.liulongbin.top/ -->
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                name: "",
+                baseApi: "http://api.cms.liulongbin.top/api/getprodlist",
+                addProductApi: "http://api.cms.liulongbin.top/api/addproduct",
+                //listApi: "/getnewslist",
+                list: [{
+                        id: 1,
+                        name: "虚假数据，看到此条数据说明api请求失败",
+                        ctime: new Date()
+                    },
+
+                    {
+                        id: 2,
+                        name: "奔驰",
+                        ctime: new Date()
+                    },
+
+                    {
+                        id: 3,
+                        name: "凯迪拉克",
+                        ctime: new Date()
+                    },
+
+                    {
+                        id: 4,
+                        name: "捷克",
+                        ctime: new Date()
+                    },
+                ],
+
+            },
+            methods: {
+                add() {
+                    //this.$http.post(arg1,arg2,qrg3) arg1请求的url地址。arg2要提交的数据对象，
+                    //arg3，以哪种表单数据类型传递过去 {emulateJSON:true}以普通表单格式application/x-www-form-urlencoded
+                    this.$http.post(this.addProductApi, {
+                        name: this.name
+                    }, {
+                        emulate: true
+                    }).then(result => {
+                        console.log(result.body);
+                        if (result.body.status === 0) {
+                            console.log(result.body);
+                            // 刷新
+                            this.getAllList();
+                            this.name = "";
+                        } else {
+                            alert("添加失败！");
+                        }
+                    })
+
+
+                },
+                getAllList() {
+                    // 已经导入vue resouce所以可以直接通过this.$http获取数据
+                    this.$http.get(this.baseApi).then(result => {
+                        console.log(result);
+                        if (result.body.status === 0) {
+                            //成功
+                            //alert('请求成功');
+                            //console.log(result.body.message);
+                            this.list = result.body.message;
+                        } else {
+                            alert('请求失败！');
+                        }
+                    })
+                },
+            },
+            beforeMount() { // created更好，发ajax的话应该尽早发，节省并行时间
+                this.getAllList();
+            },
+        });
+    </script>
+
+</body>
+
+</html>
