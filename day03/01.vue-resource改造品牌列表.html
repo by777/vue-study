@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-20 13:36:35
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-20 16:06:13
+ * @LastEditTime: 2020-06-20 22:05:54
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -62,13 +62,15 @@
     </div>
 
     <script>
+        // 启用了根地址，再get等请求时不要加/
+        Vue.http.options.root= 'http://api.cms.liulongbin.top/api/'
         var vm = new Vue({
             el: "#app",
             data: {
                 name: "",
                 id: "",
-                baseApi: "http://api.cms.liulongbin.top/api/getprodlist",
-                addProductApi: "http://api.cms.liulongbin.top/api/addproduct",
+                // baseApi: "http://api.cms.liulongbin.top/api/getprodlist",
+                // addProductApi: "http://api.cms.liulongbin.top/api/addproduct",
                 //listApi: "/getnewslist",
                 list: [{
                         id: 1,
@@ -100,7 +102,7 @@
                 add() {
                     //this.$http.post(arg1,arg2,qrg3) arg1请求的url地址。arg2要提交的数据对象，
                     //arg3，以哪种表单数据类型传递过去 {emulateJSON:true}以普通表单格式application/x-www-form-urlencoded
-                    this.$http.post(this.addProductApi, {
+                    this.$http.post("addproduct", {
                         name: this.name
                     }, {
                         emulate: true
@@ -120,7 +122,7 @@
                 },
                 getAllList() {
                     // 已经导入vue resouce所以可以直接通过this.$http获取数据
-                    this.$http.get(this.baseApi).then(result => {
+                    this.$http.get("getprodlist").then(result => {
                         console.log(result);
                         if (result.body.status === 0) {
                             //成功
@@ -133,7 +135,7 @@
                     })
                 },
                 del(id) {
-                    this.$http.get("http://api.cms.liulongbin.top/api/delproduct/" + id).then(result => {
+                    this.$http.get("delproduct/" + id).then(result => {
                         if (result.body.status === 0) {
                             this.getAllList();
                             this.id = '';
