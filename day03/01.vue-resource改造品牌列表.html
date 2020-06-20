@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-20 13:36:35
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-20 15:59:51
+ * @LastEditTime: 2020-06-20 16:06:13
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +53,7 @@
                     <td>{{item.id}}</td>
                     <td>{{item.name}}</td>
                     <td>{{item.ctime}}</td>
-                    <td><a href="">删除</a></td>
+                    <td><a href="delproduct/:id" @click.prevent="del(item.id)">删除</a></td>
                 </tr>
             </tbody>
         </table>
@@ -66,6 +66,7 @@
             el: "#app",
             data: {
                 name: "",
+                id: "",
                 baseApi: "http://api.cms.liulongbin.top/api/getprodlist",
                 addProductApi: "http://api.cms.liulongbin.top/api/addproduct",
                 //listApi: "/getnewslist",
@@ -131,6 +132,17 @@
                         }
                     })
                 },
+                del(id) {
+                    this.$http.get("http://api.cms.liulongbin.top/api/delproduct/" + id).then(result => {
+                        if (result.body.status === 0) {
+                            this.getAllList();
+                            this.id = '';
+                        }
+                        else{
+                            alert("删除失败！");
+                        }
+                    })
+                }
             },
             beforeMount() { // created更好，发ajax的话应该尽早发，节省并行时间
                 this.getAllList();
