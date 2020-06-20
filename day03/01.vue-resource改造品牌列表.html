@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-20 13:36:35
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-20 22:05:54
+ * @LastEditTime: 2020-06-20 22:11:20
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -64,6 +64,8 @@
     <script>
         // 启用了根地址，再get等请求时不要加/
         Vue.http.options.root= 'http://api.cms.liulongbin.top/api/'
+        // 也可通过下面全局配置{ emulate: true }
+        // Vue.http.options.emulateJSON = true;
         var vm = new Vue({
             el: "#app",
             data: {
@@ -105,11 +107,11 @@
                     this.$http.post("addproduct", {
                         name: this.name
                     }, {
-                        emulate: true
+                        emulateJSON: true
                     }).then(result => {
                         console.log(result.body);
                         if (result.body.status === 0) {
-                            console.log(result.body);
+                            // console.log(result.body);
                             // 刷新
                             this.getAllList();
                             this.name = "";
