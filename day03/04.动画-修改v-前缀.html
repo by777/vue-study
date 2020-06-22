@@ -1,0 +1,94 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-22 21:06:49
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-22 21:14:24
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css"><style>
+        /* .v-enter进入之前元素的起始状态 */
+        /* .v-leave-to是动画离开之后，离开的终止状态 */
+        .v-enter,
+        .v-leave-to {
+            opacity: 0;
+            /* color: chocolate; */
+            transform: translateX(150px);
+            /* 位移 */
+        }
+
+        /* 入场动画的时间段、出场时间段 */
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease;
+
+        } 
+
+        .my-enter,
+        .my-leave-to {
+            opacity: 0;
+            /* color: chocolate; */
+            transform: translateY(70px);
+            /* 位移 */
+        }
+
+        /* 入场动画的时间段、出场时间段 */
+        .my-enter-active,
+        .my-leave-active{
+            transition: all 0.8s ease;
+
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+
+
+
+        <button type="button" class="btn btn-lg btn-danger" @click="flag=!flag">toggle</button>
+        <transition>
+            <h3 v-if="flag"> 这是一个动画，能够显示和消失</h3>
+
+        </transition>
+
+        <hr>
+        
+        <button type="button" class="btn btn-lg btn-danger" @click="flag_2=!flag_2">toggle2</button>
+        <transition name="my">
+            <h6 v-if="flag_2"> 这是一个h6，能够显示和消失</h6>
+
+        </transition>
+        
+
+
+            <h5>
+
+                1.使用transition元素(vue提供的)，把需要被动画控制的元素包裹起来
+                <br/>
+                2.自定义两组样式，来控制transition内部的元素实现动画
+            </h5>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+                flag_2:false,
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+</html>
