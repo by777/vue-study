@@ -1,0 +1,78 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-22 21:38:06
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-22 22:07:48
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <!-- 第三方入场动画 -->
+    <link rel="stylesheet" href="../lib/animate.css">
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: red;
+        }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div id="app">
+
+        <input type="button" value="添加到购物车" @click="flag=!flag">
+
+        <transition @before-enter="beforeEnter" @enter="enter" @after="after" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+
+            </transition>
+
+
+    </div>
+
+
+
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+            },
+            methods: {
+                // el是一个原生的js DOM对象
+                beforeEnter(el) {
+                    el.style.transform = "translate(0,0)";//    小球的起始位置
+
+                },
+                enter(el,done) {
+                    el.offsetWidth;//必写
+                    // 动画开始之后可以设置结束状态
+                    el.style.transform = "translate(150px,450px)";
+                    // 过渡效果
+                    el.style.transition = "all 1s ease";//过度所有属性
+                    done();//可以让动画立即结束，小球立即消失。done其实就是afterEnter函数的引用
+                },
+                after(el) {
+
+                },
+                afterEnter(el) {
+                    // 动画完成之后
+                    this.flag = !this.flag;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
