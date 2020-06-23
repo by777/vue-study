@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-23 20:06:27
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-23 22:11:45
+ * @LastEditTime: 2020-06-23 22:17:21
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,13 +22,14 @@
             margin: 5px;
             line-height: 35px;
             padding-left: 5px;
-            
+
             width: 600px;
         }
-        li:hover{
-            background-color:hotpink;
-            
-            font-weight:bold;
+
+        li:hover {
+            background-color: hotpink;
+
+            font-weight: bold;
             transition: all 0.6s ease;
         }
 
@@ -41,19 +42,20 @@
 
         .v-enter-active,
         .v-leave-active {
-            transition: all  0.6s ease;
+            transition: all 0.6s ease;
         }
 
         /* .v-move .v-leave-active配合使用一般都这样写，配合使用 */
-        .v-move{
-             /* 可以设置元素位移时候的变化，单纯的v-move还不行 需要 position: relative;*/
-            transition: all 0.6s,ease;
+        .v-move {
+            /* 可以设置元素位移时候的变化，单纯的v-move还不行 需要 position: relative;*/
+            transition: all 0.6s, ease;
 
         }
-        .v-leave-active{
+
+        .v-leave-active {
             /* 如果没有指定宽度，默认就会最小值 */
             position: relative;
-            transition: all 0.6s,ease;
+            transition: all 0.6s, ease;
         }
     </style>
 </head>
@@ -75,15 +77,17 @@
             <button type="button" class="btn btn-default" @click="add">提交</button>
 
         </div>
-        <ul>
-            <transition-group>
-                <li v-for="(item,i) in list" :key="item.id" @click="del(i)">
+        <!-- <ul> -->
+        <!-- 不手动写ul，使用Tag指定，防止不符合w3c规范，防止transition-group 自动渲染为span标签 -->
+        <transition-group appear tag="ul">
+            <!-- appear 添加transition-group 入场效果 -->
+            <li v-for="(item,i) in list" :key="item.id" @click="del(i)">
 
-                    {{item.id}} ---> {{item.name}} 索引为{{i}}
-                </li>
-            </transition-group>
+                {{item.id}} ---> {{item.name}} 索引为{{i}}
+            </li>
+        </transition-group>
 
-        </ul>
+        <!-- </ul> -->
 
 
 
@@ -120,8 +124,8 @@
                     });
                     this.id = this.name = "";
                 },
-                del(i){
-                    this.list.splice(i,1);//从i位置开始删1个
+                del(i) {
+                    this.list.splice(i, 1); //从i位置开始删1个
                 }
 
             }
