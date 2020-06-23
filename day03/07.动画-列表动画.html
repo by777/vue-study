@@ -1,0 +1,119 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-23 20:06:27
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-23 20:45:11
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <!-- 第三方入场动画 -->
+    <link rel="stylesheet" href="../lib/bootstrap-3.3.7.css" />
+    <link rel="stylesheet" href="../lib/animate.css">
+
+    <style>
+        li {
+            border: 1px dashed #999;
+            margin: 5px;
+            line-height: 35px;
+            padding-left: 5px;
+            font-size: medium;
+            width: 600px;
+        }
+        li:hover{
+            background-color:hotpink;
+            
+            font-weight:bold;
+            transition: all 0.4s ease;
+        }
+
+        .v-leave-to,
+        .v-enter {
+            opacity: 0;
+            transform: translateY(100px);
+        }
+
+        .v-enter-active,
+        .v-leave-active {
+            transition: all ease 0.6s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <div>
+            <label>
+                Id:
+                <input type="text" v-model="id">
+            </label>
+            <label>
+                Name:
+                <input type="text" v-model="name">
+            </label>
+
+            <button type="button" class="btn btn-default" @click="add">提交</button>
+
+        </div>
+        <ul>
+            <transition-group>
+                <li v-for="item in list" :key="item.id">
+
+                    {{item.id}} ---> {{item.name}}
+                </li>
+            </transition-group>
+
+        </ul>
+
+
+
+    </div>
+
+
+
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                id: "",
+                name: "",
+                list: [{
+                        id: 1,
+                        name: "赵高"
+                    },
+                    {
+                        id: 2,
+                        name: "路飞"
+                    },
+                    {
+                        id: 3,
+                        name: "动森"
+                    },
+                ]
+            },
+            methods: {
+                add() {
+                    this.list.push({
+                        id: this.id,
+                        name: this.name
+                    });
+                    this.id = this.name = "";
+                }
+
+            }
+
+
+        });
+    </script>
+
+</body>
+
+</html>
