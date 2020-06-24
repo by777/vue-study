@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-24 22:03:48
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-24 22:17:40
+ * @LastEditTime: 2020-06-24 22:23:37
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -30,26 +30,20 @@
             <h3>{{count}}</h3>
             <input type="button" value="+1" @click="increment" />
             <h3>{{count}}</h3>
-            <hr>
         </div>
-        
-        
     </template>
 
     <script>
         // 这是一个计数器组件，身上有个按钮、每次点击data.count+1
         var dataObj = {
             count: 0
-        };// 这样会导致全局变量
+        };
         
         Vue.component('counter', {
             template: "#tmpl1",
             // 组件中的data应该是一个函数、并且返回一个对象
             // 组件中的data数据、和vm实例中data的使用完全一样
             data: function () {
-                var dataObjPrivete = {
-                    count:23
-                }
 
                 return dataObj;
 
