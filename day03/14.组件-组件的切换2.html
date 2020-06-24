@@ -1,0 +1,76 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-24 22:33:56
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-24 22:39:40
+--> 
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Vue提供了component元素 :is指定要展示的组件名称-->
+        <a @click.prevent="componentName='login'">登录</a>
+        <a @click.prevent="componentName='register'">注册</a>
+        <component :is="componentName">
+
+        </component>
+
+
+    </div>
+    
+
+
+    <script>
+
+        Vue.component('login', {
+            template: "<h3>登陆中...</h3>",
+            // 组件中的data应该是一个函数、并且返回一个对象
+            // 组件中的data数据、和vm实例中data的使用完全一样
+            data: function () {
+              
+
+                return {};
+
+            },
+            methods: {
+               
+            }
+        });
+        Vue.component('register', {
+            template: "<h3>注册中...</h3>",
+            // 组件中的data应该是一个函数、并且返回一个对象
+            // 组件中的data数据、和vm实例中data的使用完全一样
+            data: function () {
+              
+
+                return {};
+
+            },
+            methods: {
+               
+            }
+        });
+
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag:true,
+                componentName:'login',
+            },
+            methods: {
+
+            },
+        });
+    </script>
+</body>
+
+</html>
