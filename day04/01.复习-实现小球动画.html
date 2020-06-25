@@ -1,0 +1,63 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-24 22:52:46
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-25 10:25:02
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+    <style>
+        .ball {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: darkorange;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <input type="button" value="添加" @click="flag=!flag">
+
+        <transition @before-enter="beforeEnter" @enter="enter" @after-enter="afterEnter">
+            <div class="ball" v-show="flag"></div>
+        </transition>
+
+    </div>
+
+    <script>
+        var vm = new Vue({
+            el: "#app",
+            data: {
+                flag: false,
+
+            },
+            methods: {
+                beforeEnter(el) {
+                    el.style.transform = 'translate(0,0)';//起始位置
+                },
+                enter(el,done) {
+                    el.offsetWidth;
+                    el.style.transform = 'translate(150px,450px)'//去哪个位置
+                    el.style.transition = 'all 1s ease';
+                    done();
+                },
+                afterEnter(el) {
+                    el.style.opacity = 0.5;
+                    // 控制小球的显示与隐藏、直接跳过后半场动画、否则按钮需要再点一次true -》 false
+                    this.flag = !this.flag;
+                },
+
+            },
+        });
+    </script>
+</body>
+
+</html>
