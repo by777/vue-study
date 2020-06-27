@@ -1,0 +1,66 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-27 21:35:36
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-27 22:01:00
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+
+<body>
+
+    <div id="app">
+
+        <input type="button" value="获取元素" @click="getElement" ref="mybtn"> 
+        <h3 id="myh3" ref="myh3"> 今天天气不错。。。。。。。</h3>
+        <hr>
+        <login ref="mylogin"></login>
+        <!-- 组件也可以引用 -->
+    </div>
+
+    <script>
+        var login = {
+            template: "<h1>登陆组件</h1>",
+            data(){
+                    return {
+                        msg:'son msg',
+                    }
+                },
+                methods:{
+                    show(){
+                        console.log("调用了子组件的方法");
+                    }
+                },
+        };
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+                getElement() {
+                    // console.log(document.getElementById("myh3").innerText);
+                    //console.log(this.$refs.myh3.innerText);
+                    // 直接调用组件中的数据和方法
+                    console.log(this.$refs.mylogin.msg);
+                    this.$refs.mylogin.show();
+
+                },
+            },
+            components:{
+                login,
+    
+            },
+        });
+    </script>
+
+</body>
+
+</html>
