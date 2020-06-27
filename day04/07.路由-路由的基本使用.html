@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-27 22:09:39
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-27 22:32:59
+ * @LastEditTime: 2020-06-27 22:58:47
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -13,15 +13,43 @@
     <title>Document</title>
     <script src="../lib/vue.js"></script>
     <script src="../lib/vue-router-3.0.1.js"></script>
+    
+    <style>
+        /* 重写选中样式 */
+        .router-link-active{
+            color: red;
+            font-weight: 800;
+        }
+        .myactive{
+            color: royalblue;
+            font: outline;
+        }
+        .v-enter,
+        .v-leave-to{
+            opacity: 0;
+            transform: translateX(140px);
+        }
+        .v-enter-active,
+        .v-leave-active{
+            transition: all 0.8s ease;
+        }
+    </style>
 </head>
 
 <body>
     <div id="app">
-        <!-- 必须要有展示用的的容器 -->
+        
         <!-- #代表当前页面的资源 -->
         <a href="#/login">登录</a>
         <a href="#/register">注册</a>
-        <router-view></router-view>
+        <!-- 必须要有展示用的的容器 -->
+        <transition mode="out-in">
+            <router-view></router-view>
+        </transition>
+        
+        <!-- 或者 router-link 默认渲染为a标签-->
+        <router-link to="/login">登录2</router-link>
+        <router-link to="/register" tag="span">注册2</router-link>
 
     </div>
     <script>
@@ -40,6 +68,19 @@
                 // path表示监听哪个路由链接地址
                 // 属性二是component组件对象、而不能是组件的引用名称 
                 // Vue.component('login',{})的login
+                
+                // 通过这种方式指定默认展示的组件页面，但不推荐
+                // {   
+                //     path:'/',
+                //     component:login
+                // },
+                
+                // 这样重定向页面路由
+                {
+                    path:'/',
+                    redirect: '/login'
+                },
+
                 {
                     path: '/login',
                     component: login
@@ -48,7 +89,8 @@
                     path: '/register',
                     component: register
                 },
-            ]
+            ],
+            linkActiveClass:"myactive",// 手动指定激活渲染的类
 
         });
 
