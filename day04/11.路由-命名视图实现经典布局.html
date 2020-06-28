@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-28 22:31:35
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-28 22:52:22
+ * @LastEditTime: 2020-06-28 22:55:57
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -40,7 +40,9 @@
         }
 
         h1 {
+            /* 设置一个元素所有外边距的宽度，或者设置各边上外边距的宽度。 */
             margin: 0;
+            /* 设置所有内边距属性。 */
             padding: 0;
             font-size: 16px;
         }
@@ -53,6 +55,7 @@
         <router-view></router-view>
         <!-- 给nameview指定组件 -->
         <div class="container">
+            <!-- 属性前面加冒号了才考虑是一个变量，这里明显是一个字符串值 -->
             <router-view name="left"></router-view>
             <router-view name="main"></router-view>
         </div>
