@@ -2,10 +2,11 @@
  * @Author: Xu Bai
  * @Date: 2020-06-28 21:48:47
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-28 21:48:57
---> 
+ * @LastEditTime: 2020-06-28 21:57:28
+-->
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +14,55 @@
     <script src="../lib/vue.js"></script>
     <script src="../lib/vue-router-3.0.1.js"></script>
 </head>
+
 <body>
-    
+    <div id="app">
+        <!-- 这里如果不写name参数、会让第一个id也匹配失败 -->
+        <router-link to="/login/777/明凯">登录</router-link>
+        <router-link to="/register">注册</router-link>
+        <router-view></router-view>
+
+    </div>
+    <script>
+        var login = {
+            template: "<h1>这是登录✌，{{this.msg}}({{this.$route.params.id}}){{$route.params.name}}</h1>",
+            // this.可省略
+            data() {
+                return {
+                    msg: "欢迎你！"
+                }
+            },
+            created() {
+                console.log(this.$route);
+                console.log(this.$route.params.id);
+            },
+        };
+        var register = {
+            template: "<h1>这是注册✌</h1>"
+        };
+        var router = new VueRouter({
+            routes: [{
+                    path: '/login/:id/:name',
+                    component: login
+                },
+                {
+                    path: '/register',
+                    component: register
+                },
+            ],
+        });
+
+        var vm = new Vue({
+            el: "#app",
+            data: {
+
+            },
+            methods: {
+
+            },
+            router: router,
+        });
+    </script>
 </body>
+
 </html>
