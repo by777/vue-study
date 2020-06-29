@@ -1,0 +1,65 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-29 21:45:57
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-06-29 22:09:39
+--> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../lib/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <com1 v-bind:parentmsg='msg' @func="getMsgFromSon"></com1>
+    </div>
+
+    <template id="tmpl">
+        <div>
+            <h1>这是子元素 |||  {{parentmsg}}</h1>
+            <input type="button" value="向父组件传递data" @click="sendMsg">
+        </div> 
+    </template>
+
+    <script>
+        var com1 = {
+            template:"#tmpl",
+            props:['parentmsg'],// 得到父组件中的data
+            data(){
+                return {
+                    msg:"子组件传递给父组件的数据"
+                }
+            },
+            methods: {
+                sendMsg(){
+                    console.log(this.msg);
+                    this.$emit('func',this.msg);
+                }
+            },
+            
+        }
+        var vm = new Vue({
+            el:"#app",
+            data:{
+                msg:"这是父组件,爸爸有100块钱，子组件用v-bind可以得到它",
+                msgFromSon:"",
+            },
+            methods: {
+                // 这里定义一个方法用来接收子组件传递过来的信息
+                getMsgFromSon(data){
+                    //document.write(data);
+                    console.log(data);
+                    this.msgFromSon = data;
+
+                }
+            },
+            components:{
+                com1:com1,
+            },
+        });
+    </script>
+</body>
+</html>
