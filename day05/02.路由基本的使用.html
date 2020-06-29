@@ -2,7 +2,7 @@
  * @Author: Xu Bai
  * @Date: 2020-06-29 22:12:24
  * @LastEditors: Xu Bai
- * @LastEditTime: 2020-06-29 22:21:57
+ * @LastEditTime: 2020-06-29 22:22:54
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -14,9 +14,9 @@
     <script src="../lib/vue.js"></script>
     <script src="../lib/vue-router-3.0.1.js"></script>
     <style>
-        .myActive{
-            background-color:brown;
-            
+        .myActive {
+            background-color: brown;
+
         }
     </style>
 </head>
@@ -26,7 +26,7 @@
     <div id="app">
         <router-link to="/login">登录</router-link>
         <router-link to="/register">注册</router-link>
-        <router-view ></router-view>
+        <router-view></router-view>
     </div>
 
     <script>
@@ -41,9 +41,9 @@
         };
 
         var router = new VueRouter({
-            routes: [
-                {
-                    path:'/',redirect: "/login"
+            routes: [{
+                    path: '/',
+                    redirect: "/login"
                 },
                 {
                     path: "/login",
