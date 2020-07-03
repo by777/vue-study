@@ -1,0 +1,39 @@
+<!--
+ * @Author: Xu Bai
+ * @Date: 2020-06-30 14:34:54
+ * @LastEditors: Xu Bai
+ * @LastEditTime: 2020-07-02 23:23:42
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- 不推荐这里直接引用 -->
+    <!-- <script src="../node_modules/jquery/dist/jquery.js"></script> -->
+    <!-- <script src="./main.js"></script> -->
+    <!-- webpack main.js --output ../src/dist/bundle.js -->
+    <!-- <script src="../dist/bundle.js"></script> 这个路径用webpack-dev-server并不会实时更新。-->
+    <!-- 下面这个路径在webpack-dev-server时会实时编译、上面那个是物理的，并不会实时更新 -->
+    <!-- /bundle.js 并没有存放到物理磁盘上、而是直接托管到内存中-->
+    <!-- css也不推荐link导入 -->
+    
+    
+    </head>
+
+<body>
+    <div id="app">
+        {{msg}}
+
+        <login></login>
+    </div>
+    <!-- webpack能处理js文件之间的互相依赖关系 -->
+    <!-- webpack能够处理浏览器的兼容、把高级语法处理成低级了 -->
+
+    <!-- 这个放前面不行 -->
+    <script src="/bundle.js"></script>
+</body>
+
+</html>

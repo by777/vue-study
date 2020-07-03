@@ -1,0 +1,22 @@
+{
+  "name": "day06",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev2": "webpack-dev-server",
+    "dev": "webpack-dev-server --open --port 3000 --contentBase src --hot"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "css-loader": "^3.6.0",
+    "style-loader": "^1.2.1"
+  },
+  "devDependencies": {
+    "bootstrap": "^4.5.0",
+    "url-loader": "^4.1.0"
+  }
+}

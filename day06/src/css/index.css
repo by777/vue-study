@@ -1,0 +1,12 @@
+html,body{
+    margin: 0;
+    padding: 0;
+    background-color: bisque;
+}
+.box{
+    width: 220px;
+    height: 120px;
+    /* 默认情况下webpack无法处理url地址、 */
+    background:url("../images/1.jpg");
+    background-size: cover;
+}
